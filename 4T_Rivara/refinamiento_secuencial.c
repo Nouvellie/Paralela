@@ -3,7 +3,7 @@
 #include <math.h> 
 #include <estructuras.h>
 #include <metodos.h>
-//#include <graphics.h> 
+//posible error		#include <graphics.h> 
 
 typedef struct triangulo t;
 //Calculamos los angulos, segun los lados del triangulo
@@ -19,6 +19,6 @@ void refinamiento_triangulacion(t t1,t malla[]){
 }
 int main(){
 	system("clear");
-//	line ( 1, 2, 3, 4 );
+//posible error		line ( 1, 2, 3, 4 );
 	return 0;
 }
