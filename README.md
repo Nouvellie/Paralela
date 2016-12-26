@@ -16,3 +16,5 @@ Ayudantía: Leonardo Jofré Flor
 1. Tareas 1,2,3,4.
 (Bcast, gather, Scatter)
 Usos de mpi4py, python, mpi, c, recv & send.
+
+Pd: creando nuevamente toda la carpeta Paralela por un force mal usado que borro todo lo que había en el repositorio.
