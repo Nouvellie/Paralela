@@ -1,9 +1,9 @@
+
 #include <stdio.h>
 //#include <metis.h>
 #include <math.h> 
 #include <estructuras.h>
 #include <metodos.h>
-//posible error		#include <graphics.h> 
 
 typedef struct triangulo t;
 //Calculamos los angulos, segun los lados del triangulo
@@ -19,6 +19,5 @@ void refinamiento_triangulacion(t t1,t malla[]){
 }
 int main(){
 	system("clear");
-//posible error		line ( 1, 2, 3, 4 );
 	return 0;
 }
