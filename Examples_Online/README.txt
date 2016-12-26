@@ -1,5 +1,7 @@
 === Dependencies ===
 
+ROBERTO ROCUANT VENEGAS RECOPILACIÓN DE EJEMPLOS EN LÍNEA SOBRE MPI DICIEMBRE 2016
+
 These programs depend on mpi4py (>= Version 1.0)
 
 The mpi4py documentation and installation instructions 
