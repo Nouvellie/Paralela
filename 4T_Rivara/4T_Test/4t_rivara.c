@@ -15,7 +15,7 @@ int main(){
 
 	int triangulos_refinar[size_ele];
 
-	llenado_malla(&malla);
+	//llenado_malla(&malla);
 	//eliminar_triangulo_ele(3,malla);
 	//llenado_malla(malla);
 	//refinamiento(18, &malla);
