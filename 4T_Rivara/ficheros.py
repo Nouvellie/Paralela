@@ -208,7 +208,7 @@ def ultimo_indice_fijo(lnodes):
 
 def leer_ele():	
 	#Lee el fichero .ele y lo asigna a la lista lelementos
-	lineas = open("espiral.ele").readlines()
+	lineas = open("africa.ele").readlines()
 	lelementos = [[m.strip() for m in n] for n in [linea.split(" ") for linea in lineas]]
 	return lelementos
 
