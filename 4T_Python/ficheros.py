@@ -88,7 +88,7 @@ def agregar_vertice_lnodos(v1,v2,lnodos):
 	lnodos[a].append(v2)
 
 #Calcula el punto medio			
-def pto_mdo(v1, v2, lnodos):
+def pto_mdo(v1, v2):
 	v1=int(v1)
 	v2=int(v2)
 	lista=[None] * 2
@@ -100,7 +100,7 @@ def pto_mdo(v1, v2, lnodos):
 def asig_pto_mdo(lelementos):
 	lista=[None] * 2
 	for i in range(1,int(lelementos[0][0])+1):
-		lista=pto_mdo(int(lelementos[i][8][1]),int(lelementos[i][8][2]),lnodos)
+		lista=pto_mdo(int(lelementos[i][8][1]),int(lelementos[i][8][2]))
 		lelementos[i].append(lista)
 
 def pto_mdoa_ele(lelements,indice,lnodes):
@@ -144,7 +144,7 @@ def crear_triangulo(v1, v2, v3,lelementos):
 	lista3=arista_larga_solo(lelementos)
 	#se llena la casilla 8 con la distancia mayor y los dos vertices que contienen la arista mayor
 	#Se genera 
-	lista4=pto_mdo(lelementos[-1][8][1],lelementos[-1][8][2], lnodos)
+	lista4=pto_mdo(lelementos[-1][8][1],lelementos[-1][8][2])
 	lelementos[-1].append(lista4)
 
 	pto_opuesto_solo(lelementos)
@@ -160,8 +160,8 @@ def return_indice_ele(lelementos, num_triangulo):
 #REVISAR PUNTO MEDIO, el i es el indice al triangulo que se encontro a refinar -valor 1 a refinar-
 def cuatro_t(lelementos, i):
 	agregar_vertice_lnodos(lelementos[i][9][0],lelementos[i][9][1],lnodos)
-	pto_mdo_uno=pto_mdo(lelementos[i][10],lelementos[i][8][1],lnodos)
-	pto_mdo_dos=pto_mdo(lelementos[i][10],lelementos[i][8][2],lnodos)
+	pto_mdo_uno=pto_mdo(lelementos[i][10],lelementos[i][8][1])
+	pto_mdo_dos=pto_mdo(lelementos[i][10],lelementos[i][8][2])
 	pto_mdo_mayor=int(lnodos[-1][0])
 
 	agregar_vertice_lnodos(pto_mdo_uno[0],pto_mdo_uno[1],lnodos)
@@ -212,9 +212,26 @@ def anadir_linea_ele(lelementos):
 	fp.write('\n1')
 	fp.close()
 
-def conformidad():
-	for i in range(1,lelementos[0][0]):
-		print lelementos[i][0]
+def conformidad(lelementos,lnodos,vertices_iniciales):
+	i=1
+	while (i == lelementos[0][0]) and (cmop_pto_mdo(pto_mdo(int(lelementos[-1][1]),int(lelementos[-1][2])),pto_mdo(int(lelementos[-1][1]),int(lelementos[-1][3])),pto_mdo(int(lelementos[-1][2]),int(lelementos[-1][3])),lnodos,vertices_iniciales))==0:  
+		if cmop_pto_mdo(pto_mdo(int(lelementos[i][1]),int(lelementos[i][2])),pto_mdo(int(lelementos[i][1]),int(lelementos[i][3])),pto_mdo(int(lelementos[i][2]),int(lelementos[i][3])),lnodos,vertices_iniciales) == 1:
+			i=1
+			agregar_vertice_lnodos(lelementos[i][9][0],lelementos[i][9][1],lnodos)
+			pto_mdo_mayor=int(lnodos[-1][0])
+			crear_triangulo(pto_mdo_mayor,lelementos[i][8][1],lelementos[i][10],lelementos)
+			crear_triangulo(pto_mdo_mayor,lelementos[i][8][2],lelementos[i][10],lelementos)
+			lelementos.pop(i)
+			lelementos[0][0]=lelementos[0][0]-1
+		else:	
+			i=i+1
+			
+#Entran 3 listas las cuales vamos a comprar con los lnodos
+def comp_pto_mdo(pmdo_uno, pmdo_dos,pmdo_tres, lnodos,vertices_iniciales):
+	for i in range(vertices_iniciales,lnodos[0][0]):
+		if (pmdo_uno[0] == lnodos[i][1] and pmdo_uno[1] == lnodos[i][2]) or (pmdo_dos[0] == lnodos[i][1] and pmdo_dos[1] == lnodos[i][2]) or (pmdo_tres[0] == lnodos[i][1] and pmdo_tres[1] == lnodos[i][2]):
+			return 1
+	return 0		
 
 lnodos=leer_node()
 lelementos=leer_ele()
@@ -232,7 +249,7 @@ cal_ang(lnodos,lelementos)
 #print lelementos
 
 cant_r=crit_ref(lelementos,30)
-print cant_r
+#print cant_r
 
 
 arista_larga(lelementos)
@@ -246,10 +263,10 @@ pto_opuesto(lelementos)
 #cuatro_t(lelementos,return_indice_ele(lelementos,5))
 
 #cuatro_t(lelementos,return_indice_ele(lelementos,2))
-
+"""
 for node in lnodos:
 	print node
-
+"""
 ##print lelementos
 for elem in lelementos:
 	print elem
