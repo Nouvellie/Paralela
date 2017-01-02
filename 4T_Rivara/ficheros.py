@@ -199,7 +199,7 @@ def pto_opuesto(lelementos):
 
 def leer_node():
 	#Lee el fichero .node y lo asigna a la lista lnodos
-	lineas = open("espiral.node").readlines()
+	lineas = open("africa.node").readlines()
 	lnodos = [[m.strip() for m in n] for n in [linea.split(" ") for linea in lineas]]
 	return lnodos	
 def ultimo_indice_fijo(lnodes):
@@ -213,12 +213,12 @@ def leer_ele():
 	return lelementos
 
 def anadir_linea_ele(lelementos):
-	fp=open('espiral.ele','a')
+	fp=open('africa.ele','a')
 	fp.write('\n1')
 	fp.close()
 
 def ele_a_pc(lelementos):
-	fp = open("espiralrf.ele","w+")
+	fp = open("africarf.ele","w+")
 	#contenido = archivo.read()
 	#indice = [lelementos[0][0]]
 
@@ -237,7 +237,7 @@ def ele_a_pc(lelementos):
 	fp.close()
 
 def node_a_pc(lnodos):
-	fp = open("espiralrf.node","w+")
+	fp = open("africarf.node","w+")
 	#contenido = archivo.read()
 #	indice = []
 	fp.write(str(lnodos[0][0]))
@@ -253,7 +253,7 @@ def node_a_pc(lnodos):
 	fp.close()
 
 def part_a_pc(lelementos):
-	fp = open("espiralrf.part","w+")
+	fp = open("africarf.part","w+")
 	#contenido = archivo.read()
 	fp.write(str(lelementos[0][0]))
 	fp.write(" ")
