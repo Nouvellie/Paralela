@@ -1,5 +1,6 @@
 import numpy as np
 import math as mt
+import matplotlib.pyplot as plt
 
 #Calculamos distancia ingresando 2 vertices casteados en enteros y la lista lnodos
 def cal_dist(v1,v2,lnodos):
@@ -8,9 +9,9 @@ def cal_dist(v1,v2,lnodos):
 #Calculamos los angulos con arcoseno ingresando 3 distancias
 def angulos(a,b, c):
 	lista= [None] * 3
-	lista[0]=(mt.acos((c*c-a*a-b*b)/(-2*a*b)))*180/3.1415
-	lista[1]=(mt.acos((a*a-b*b-c*c)/(-2*b*c)))*180/3.1415
-	lista[2]=(mt.acos((b*b-a*a-c*c)/(-2*a*c)))*180/3.1415
+	lista[0]=(mt.acos((c*c-a*a-b*b)/(-2*a*b)))*180/mt.pi
+	lista[1]=(mt.acos((a*a-b*b-c*c)/(-2*b*c)))*180/mt.pi
+	lista[2]=(mt.acos((b*b-a*a-c*c)/(-2*a*c)))*180/mt.pi
 	return lista
 
 #Genera los 3 angulos a todos los triangulos de toda la malla y se los agrega a la lista lelementos
@@ -152,9 +153,10 @@ def crear_triangulo(v1, v2, v3,lelementos):
 #Recorremos la matriz de triangulos y preguntamos el primer elemento de cada fila, este nos comparara el num
 # de triangulo que buscamos, para luego borrarlo	
 def return_indice_ele(lelementos, num_triangulo):
-	for i in range(1,int(lelementos[0][0])):
+	for i in range(1,int(lelementos[0][0])+1):
 		if int(lelementos[i][0]) == num_triangulo:
 			return i
+	return 0
 
 
 #REVISAR PUNTO MEDIO, el i es el indice al triangulo que se encontro a refinar -valor 1 a refinar-
@@ -231,42 +233,49 @@ def comp_pto_mdo(pmdo_uno, pmdo_dos,pmdo_tres, lnodos,vertices_iniciales):
 	for i in range(vertices_iniciales,lnodos[0][0]):
 		if (pmdo_uno[0] == lnodos[i][1] and pmdo_uno[1] == lnodos[i][2]) or (pmdo_dos[0] == lnodos[i][1] and pmdo_dos[1] == lnodos[i][2]) or (pmdo_tres[0] == lnodos[i][1] and pmdo_tres[1] == lnodos[i][2]):
 			return 1
-	return 0		
+	return 0
 
+
+i=1
+#Recopilacion de datos
+contador=0
 lnodos=leer_node()
 lelementos=leer_ele()
-#lelementos[1].append(5)
-
-#ele(lelementos)
-
-"""print cal_dist(1,2,lnodos)
-lista=[]
-lista=angulos(0.999668445,1.4186599311,1.0469407815)
-print lista
-"""
-
 cal_ang(lnodos,lelementos)
-#print lelementos
-
-cant_r=crit_ref(lelementos,30)
-#print cant_r
-
-
+cant_r=crit_ref(lelementos,39)
 arista_larga(lelementos)
-
 asig_pto_mdo(lelementos)
-
 pto_opuesto(lelementos)
 
+while i <= int(lelementos[0][0]):
+	print i
+	if lelementos[i][7] == 1:
+		cuatro_t(lelementos, return_indice_ele(lelementos,int(lelementos[i][0])))
+		vertices_iniciale=[None] * 3
+		vertices_iniciale[0]=lelementos[i][1]
+		vertices_iniciale[1]=lelementos[i][2]
+		vertices_iniciale[2]=lelementos[i][3]
+		conformidad(lelementos,lnodos,vertices_iniciale)
+		contador=contador+1
+		i=1
+	else:
+		i=i+1	
 #cuatro_t(lelementos,return_indice_ele(lelementos,1))
 
 #cuatro_t(lelementos,return_indice_ele(lelementos,5))
 
 #cuatro_t(lelementos,return_indice_ele(lelementos,2))
-"""
-for node in lnodos:
+
+l2 = lelementos[0:4]
+l3 = lelementos[0:4]
+for node in l3:
 	print node
-"""
-##print lelementos
-for elem in lelementos:
+
+
+for elem in l2:
 	print elem
+
+print ""
+print cant_r
+print ""
+print contador	
