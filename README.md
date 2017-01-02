@@ -19,3 +19,5 @@ Ayudantía: Leonardo Jofré Flor
 Uso de mpi4py, python, mpi, c, recv & send.
 
 Pd: creando nuevamente toda la carpeta Paralela por un force mal usado que borro todo lo que había en el repositorio.
+
+Cátedra programada, 4T Rivara completo, bisección completa, conformidad completa, uso de Showme, uso de Verifi Conformidad ok...

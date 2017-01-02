@@ -199,7 +199,7 @@ def pto_opuesto(lelementos):
 
 def leer_node():
 	#Lee el fichero .node y lo asigna a la lista lnodos
-	lineas = open("espiral.node").readlines()
+	lineas = open("africa.node").readlines()
 	lnodos = [[m.strip() for m in n] for n in [linea.split(" ") for linea in lineas]]
 	return lnodos	
 def ultimo_indice_fijo(lnodes):
@@ -208,7 +208,7 @@ def ultimo_indice_fijo(lnodes):
 
 def leer_ele():	
 	#Lee el fichero .ele y lo asigna a la lista lelementos
-	lineas = open("espiral.ele").readlines()
+	lineas = open("africa.ele").readlines()
 	lelementos = [[m.strip() for m in n] for n in [linea.split(" ") for linea in lineas]]
 	return lelementos
 
@@ -295,7 +295,7 @@ i=1
 contador=0
 lnodos=leer_node()
 uif = ultimo_indice_fijo(lnodos)
-print uif
+#print uif
 lelementos=leer_ele()
 cal_ang(lnodos,lelementos)
 cant_r=crit_ref(lelementos,39)
