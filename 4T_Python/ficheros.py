@@ -113,7 +113,7 @@ def crear_indice(lelementos):
 	
 	ult_crea=int(lelementos[-1][0])+1
 	lelementos[0][0]=int(lelementos[0][0])+1
-	print lelementos[-1][0]
+	#print lelementos[-1][0]
 	lelementos.append([ult_crea])
 def crear_triangulo(v1, v2, v3,lelementos):
 	#Esta lista genera los tres vertices y el numero del triangulo si es refinable 1 y 0
@@ -199,59 +199,89 @@ def pto_opuesto(lelementos):
 
 def leer_node():
 	#Lee el fichero .node y lo asigna a la lista lnodos
-	lineas = open("mesh.node").readlines()
+	lineas = open("africa.node").readlines()
 	lnodos = [[m.strip() for m in n] for n in [linea.split(" ") for linea in lineas]]
 	return lnodos	
 
 def leer_ele():	
 	#Lee el fichero .ele y lo asigna a la lista lelementos
-	lineas = open("mesh.ele").readlines()
+	lineas = open("africa.ele").readlines()
 	lelementos = [[m.strip() for m in n] for n in [linea.split(" ") for linea in lineas]]
 	return lelementos
 
 def anadir_linea_ele(lelementos):
-	fp=open('mesh.ele','a')
+	fp=open('africa.ele','a')
 	fp.write('\n1')
 	fp.close()
 
 def ele_a_pc(lelementos):
-	fp = open("mesh2.ele","w+")
+	fp = open("africarf.ele","w+")
 	#contenido = archivo.read()
-	indice = [lelementos[0][0]]
-	fp.writelines(str(indice))
+	#indice = [lelementos[0][0]]
+
+	fp.write(str(lelementos[0][0]))
+	fp.write(" ")
+	fp.write(str(3))
 	for i in range(1,int(lelementos[0][0])+1):
-		lista = ["\n", lelementos[i][0]," ",lelementos[i][1], " ", lelementos[i][2], " ", lelementos[i][3]]
-		fp.writelines(str(lista))
+		fp.write(str("\n"))
+		fp.write(str(lelementos[i][0]))
+		fp.write(" ")
+		fp.write(str(lelementos[i][1]))
+		fp.write(" ")
+		fp.write(str(lelementos[i][2]))
+		fp.write(" ")
+		fp.write(str(lelementos[i][3]))
 	fp.close()
 
 def node_a_pc(lnodos):
-	fp = open("mesh2.node","w+")
+	fp = open("africarf.node","w+")
 	#contenido = archivo.read()
-	indice = [lnodos[0][0]]
-	fp.writelines(str(indice))
+#	indice = []
+	fp.write(str(lnodos[0][0]))
+	fp.write(" ")
+	fp.write(str(2))
 	for i in range(1,int(lnodos[0][0])+1):
-		lista = ["\n", lnodos[i][0]," ",lnodos[i][1], " ", lnodos[i][2]]
-		fp.writelines(str(lista))
+		fp.write("\n")
+		fp.write(str(lnodos[i][0]))
+		fp.write(" ")
+		fp.write(str(lnodos[i][1]))
+		fp.write(" ")
+		fp.write(str(lnodos[i][2]))
+	fp.close()
+
+def part_a_pc(lelementos):
+	fp = open("africarf.part","w+")
+	#contenido = archivo.read()
+	fp.write(str(lelementos[0][0]))
+	fp.write(" ")
+	fp.write(str(1))
+	for i in range(1,int(lelementos[0][0])+1):
+		fp.write("\n")
+		fp.write(str(lelementos[i][0]))
+		fp.write(" ")
+		fp.write(str(1))
 	fp.close()
 
 
 def conformidad(lelementos,lnodos,vertices_iniciales):
 	i=1
-	while (i == lelementos[0][0]) and (cmop_pto_mdo(pto_mdo(int(lelementos[-1][1]),int(lelementos[-1][2])),pto_mdo(int(lelementos[-1][1]),int(lelementos[-1][3])),pto_mdo(int(lelementos[-1][2]),int(lelementos[-1][3])),lnodos,vertices_iniciales))==0:  
-		if cmop_pto_mdo(pto_mdo(int(lelementos[i][1]),int(lelementos[i][2])),pto_mdo(int(lelementos[i][1]),int(lelementos[i][3])),pto_mdo(int(lelementos[i][2]),int(lelementos[i][3])),lnodos,vertices_iniciales) == 1:
-			i=1
+	while (i <= int(lelementos[0][0])):
+		if comp_pto_mdo(pto_mdo(int(lelementos[i][1]),int(lelementos[i][2])),pto_mdo(int(lelementos[i][1]),int(lelementos[i][3])),pto_mdo(int(lelementos[i][2]),int(lelementos[i][3])),lnodos,vertices_iniciales) == 1:
+			print i
+			print lelementos 
 			agregar_vertice_lnodos(lelementos[i][9][0],lelementos[i][9][1],lnodos)
 			pto_mdo_mayor=int(lnodos[-1][0])
 			crear_triangulo(pto_mdo_mayor,lelementos[i][8][1],lelementos[i][10],lelementos)
 			crear_triangulo(pto_mdo_mayor,lelementos[i][8][2],lelementos[i][10],lelementos)
 			lelementos.pop(i)
 			lelementos[0][0]=lelementos[0][0]-1
+			i=1 
 		else:	
 			i=i+1
 			
 #Entran 3 listas las cuales vamos a comprar con los lnodos
 def comp_pto_mdo(pmdo_uno, pmdo_dos,pmdo_tres, lnodos,vertices_iniciales):
-	for i in range(vertices_iniciales,lnodos[0][0]):
+	for i in range(1,lnodos[0][0]):
 		if (pmdo_uno[0] == lnodos[i][1] and pmdo_uno[1] == lnodos[i][2]) or (pmdo_dos[0] == lnodos[i][1] and pmdo_dos[1] == lnodos[i][2]) or (pmdo_tres[0] == lnodos[i][1] and pmdo_tres[1] == lnodos[i][2]):
 			return 1
 	return 0
@@ -268,8 +298,11 @@ arista_larga(lelementos)
 asig_pto_mdo(lelementos)
 pto_opuesto(lelementos)
 
+for ele in lelementos:
+	print
+
 while i <= int(lelementos[0][0]):
-	print i
+	#print i
 	if lelementos[i][7] == 1:
 		cuatro_t(lelementos, return_indice_ele(lelementos,int(lelementos[i][0])))
 		vertices_iniciale=[None] * 3
@@ -300,3 +333,4 @@ print ""
 print "Se refinaron: ", contador, " triangulos."	
 ele_a_pc(lelementos)
 node_a_pc(lnodos)
+part_a_pc(lelementos)
